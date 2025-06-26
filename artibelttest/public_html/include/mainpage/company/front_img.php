@@ -1,0 +1,1 @@
+<img width="241" alt="Снимок.PNG" src="/upload/medialibrary/27b/9ir2nh6uo2z0k7m4ss6zr1d8egk2rdr5/Снимок.PNG" height="264" title="Снимок.PNG">
