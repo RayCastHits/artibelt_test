@@ -1,0 +1,50 @@
+Options -Indexes
+ErrorDocument 404 /404.php
+
+<IfModule mod_php5.c>
+  php_flag session.use_trans_sid off
+</IfModule>
+
+<IfModule mod_php7.c>
+  php_flag session.use_trans_sid off
+  php_value max_input_vars 10000 
+</IfModule>
+
+Redirect 301 /content/ /
+Redirect 301 /examples/ /
+Redirect 301 /landings/ /
+Redirect 301 /e-store/ /
+Redirect 301 /communication/ /
+Redirect 301 /services/ /
+Redirect 301 /company/jobs/ /company/
+Redirect 301 /company/staff/ /company/
+Redirect 301 /info/more/ /info/
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
+  RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
+  RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
+  # Удаляем index.php из адреса
+  RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+  # Не применяем к админке, иначе перестает работать страница Highload-блоки
+  RewriteCond %{REQUEST_URI} !/bitrix/admin/.* [NC]
+  RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+</IfModule>
+
+<IfModule mod_dir.c>
+  DirectoryIndex index.php index.html
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpeg "access plus 3 day"
+  ExpiresByType image/gif "access plus 3 day"
+  ExpiresByType image/png "access plus 3 day"
+  ExpiresByType text/css "access plus 3 day"
+  ExpiresByType application/javascript "access plus 3 day"
+</IfModule>
